@@ -9,25 +9,12 @@
     form.addEventListener('submit', event => {
         event.preventDefault();
         const obj = {};
-        const input = event.target.querySelectorAll('input');
+        const inputs = event.target.querySelectorAll('input');
         
 
-        input.forEach(input => {
+        inputs.forEach(input => {
              
-            document.querySelector('#form').addEventListener('keydown', ({ target }) =>{
-            if (target.nodeName !== 'INPUT') return;
-                target.classList.remove('error');
-                
-            })
-
-            document.querySelector('#form').addEventListener('blur', ({ target }) =>{
-            if (target.nodeName !== 'INPUT') return;
-
-            if (target.value.trim() === '') {
-                target.classList.add('error');
-                }
-                
-            })
+            
             
             obj[input.name] = input.value;
 
@@ -36,7 +23,15 @@
         createElement(obj);
         event.target.reset();
     })
-
+    
+    document.querySelector('#form').addEventListener('keydown',(e) => {
+        e.target.classList.remove('error');
+    })
+    document.querySelector('#form').addEventListener('focusout',({target}) => {
+        if (target.value.trim() === '') {
+            target.classList.add('error');
+        }
+    })
 
     function createElement(elementData) {
         const div = document.createElement('div');
